@@ -1,0 +1,49 @@
+.menu-button {
+  cursor: pointer;
+}
+
+.navbar {
+  background: #208c5d !important;
+  padding: 15px;
+}
+
+.navbar-brand {
+  width: 100%;
+  color: white !important;
+}
+
+.content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.menu-button {
+  font-size: 20px !important;
+}
+
+
+.right {
+  font-size: 16px;
+  margin-top: 8px
+}
+
+img {
+  height: 50px;
+  margin-left:10px;
+}
+
+.welcome {
+  cursor:pointer;
+}
+
+.logout {
+  cursor:pointer;
+}
+
+
+@media(max-width: 767px) {
+  .company-name {
+    display: none;
+  }
+}

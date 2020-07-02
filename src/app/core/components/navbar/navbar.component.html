@@ -1,0 +1,26 @@
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-light">
+  <div class="navbar-brand">
+    <div class="content">
+        <div class="left">
+            <i-bs *ngIf="showMenu" name="list" class="menu-button" (click)="toggle()"></i-bs>
+            <img src="https://spi.ph/wp-content/uploads/2019/03/logo.png">
+            <span class="company-name"> St. Peregrine Institute</span>
+        </div>
+        <div class="right">
+          <div class="welcome" placement="bottom" [ngbPopover]="logout">
+            <i-bs name="person-circle" class="menu-button" ></i-bs>
+            Welcome {{user}}
+          </div>
+        </div>
+    </div>
+
+  </div>
+</nav>
+
+<ng-template #logout>
+   <span class="logout" (click)="logoutApp()">
+     <i-bs name="arrow-bar-left" class="menu-button" ></i-bs>
+     Logout
+   </span>
+</ng-template>

@@ -1,0 +1,31 @@
+<div class="header">
+  <h3 class="title">Add Course</h3>
+  <span class="add" (click)="back()"> <i-bs name="backspace-fill" class="backspace-fill" ></i-bs> Back</span>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <form [formGroup]="form" (ngSubmit)="createCourse()">
+        <ng-container formArrayName="courses">
+
+          <div *ngFor="let course of courses.controls; let i = index" class="form-group">
+            <ng-container [formGroupName]="i">
+              <label for="course">Course Name</label>
+              <div *ngIf="i == (courses.controls.length - 1)" class="input-group mb-2">
+                  <div *ngIf="(courses.controls.length > 1)" (click)="deleteCourse(i)" class="input-group-text"><i-bs name="dash-circle" class="plus-circle-fill" ></i-bs></div>
+                  <div (click)="addCourse()" class="input-group-text"><i-bs name="plus-circle-fill" class="plus-circle-fill" ></i-bs></div>
+                  <input formControlName="course" type="email" class="form-control" id="course" aria-describedby="courseName" placeholder="Ex. Carpentry">
+              </div>
+              <div *ngIf="i != (courses.controls.length - 1)" class="input-group mb-2">
+                  <div (click)="deleteCourse(i)" class="input-group-text"><i-bs name="dash-circle" class="plus-circle-fill" ></i-bs></div>
+                  <input formControlName="course" type="email" class="form-control" id="course" aria-describedby="courseName" placeholder="Ex. Carpentry">
+              </div>
+              <small class="form-text error" *ngIf="courses.controls[i].invalid && courses.controls[i].touched">Course field is required</small>
+              <small id="emailHelp" class="form-text text-muted">Course should also be added in vdo cipher with the same name.</small>
+            </ng-container>
+          </div>
+          </ng-container>
+      <button type="submit" class="btn btn-success" >Submit</button>
+    </form>
+  </div>
+</div>

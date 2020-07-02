@@ -1,0 +1,91 @@
+@import url('https://rsms.me/inter/inter-ui.css');
+::selection {
+  background: #2D2F36;
+}
+::-webkit-selection {
+  background: #2D2F36;
+}
+::-moz-selection {
+  background: #2D2F36;
+}
+body {
+  font-family: 'Inter UI', sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+.page {
+  background: #38383e;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 60px);
+  position: absolute;
+  place-content: center;
+  width: calc(100% - 40px);
+  align-items: center;
+}
+@media (max-width: 767px) {
+  .page {
+    height: auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
+.container {
+  display: flex;
+  height: 320px;
+  margin: 0 auto;
+  width: 640px;
+}
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    height: 630px;
+    width: 320px;
+  }
+
+}
+.left {
+  background: white;
+  height: calc(100% - 40px);
+  top: 20px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+}
+@media (max-width: 767px) {
+  .left {
+    height: 100%;
+    left: 20px;
+    top: 0px;
+    width: calc(100% - 10px);
+    max-height: 270px;
+  }
+}
+.login {
+  color: black !important;
+  font-size: 50px;
+  font-weight: 900;
+  margin-bottom: 30px;
+}
+.eula {
+  color: rgb(65, 62, 62);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 40px;
+  margin-top: -20px;
+}
+
+
+.logo-login  {
+  background: url(https://spi.ph/wp-content/uploads/2019/03/logo.png);
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.tool {
+  color: black;
+    font-size: 50px;
+    margin-top: 10px;
+}

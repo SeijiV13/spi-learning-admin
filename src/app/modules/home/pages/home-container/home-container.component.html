@@ -1,0 +1,25 @@
+
+<app-navbar [showMenu]="showMenu"></app-navbar>
+
+<ng-sidebar-container>
+
+    <!-- A sidebar -->
+    <ng-sidebar  [(opened)]="opened">
+        <br>
+        <h5 class="sidebar-title"><i-bs name="collection-play-fill"></i-bs> Menu</h5>
+        <br><br>
+        <ul>
+          <li [ngClass]="activeRoute === 'user' ? 'selected' : ''" (click)="redirect('user')"><i-bs name="people-fill"></i-bs> Add User</li>
+          <li [ngClass]="activeRoute === 'course' ? 'selected' : ''" (click)="redirect('courses')"><i-bs name="folder-fill"></i-bs> Add Course</li>
+        </ul>
+    </ng-sidebar>
+
+    <!-- Page content -->
+    <div ng-sidebar-content>
+        <div class="container">
+           <router-outlet></router-outlet>
+        </div>
+
+    </div>
+
+</ng-sidebar-container>

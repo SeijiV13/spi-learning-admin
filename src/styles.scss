@@ -1,1 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+// regular style toast
+@import '~ngx-toastr/toastr';
+@font-face {
+  font-family: poppins-regular;
+  src: url(assets/fonts/Poppins-Regular.ttf) format("opentype");
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'poppins-regular';
+}
+
+.container {
+  padding: 10px;
+}
+
+body {
+  background: #38383e;
+  color: white;
+  margin:0;
+}
+
+.card {
+  color: black;
+  -webkit-box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+  box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+}
+
+.card-img-top {
+  height: 150px !important;
+
+}
+
+.ng-sidebar {
+  background: #2d2c2c !important;
+  -webkit-box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+  box-shadow: 4px 5px 26px -3px rgba(0,0,0,0.75);
+  width: 250px;
+
+}
+
+.popover-body {
+  cursor:pointer;
+}
+
+
+.error-box {
+  width: 100%;
+  padding: 10px;
+  border-style: solid;
+  border-color: #c14e48;
+  border-radius: 10px;
+  border-width: 1px;
+  position: absolute;
+  margin-top: -35px;
+  font-size: 10px;
+  color: #e08181;
+}
+
+.ng-touched.ng-invalid {
+  border-style: 1px;
+  border-color: red;
+
+}
