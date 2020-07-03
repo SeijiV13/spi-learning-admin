@@ -35,6 +35,12 @@ export class AddUserComponent implements OnInit {
       role: ['', Validators.required],
       password: ['', Validators.required],
       apiKey: ['', Validators.required],
+      batchNumber: ['', Validators.required],
+      branch: ['', Validators.required],
+      province: ['', Validators.required],
+      region: ['', Validators.required],
+      expiration: ['', Validators.required],
+
       courses: this.fb.array([
 
       ])
@@ -78,6 +84,11 @@ export class AddUserComponent implements OnInit {
         role: this.form.controls.role.value,
         password: this.form.controls.password.value,
         apiKey: this.form.controls.apiKey.value,
+        batchNumber: this.form.controls.batchNumber.value,
+        branch: this.form.controls.branch.value,
+        province: this.form.controls.province.value,
+        region: this.form.controls.region.value,
+        expiration: this.form.controls.expiration.value,
         courses: [],
       };
       for (const course of this.courses.controls) {

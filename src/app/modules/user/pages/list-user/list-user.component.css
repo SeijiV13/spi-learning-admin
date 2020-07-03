@@ -9,3 +9,7 @@
 .add:hover {
   text-decoration: underline;
 }
+
+th {
+  white-space: nowrap;
+}

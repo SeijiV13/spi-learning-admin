@@ -18,3 +18,17 @@
 .error {
   color: red;
 }
+
+
+input, select {
+  margin-bottom: 10px;
+}
+
+label {
+  margin-bottom:1px;
+}
+
+label:after {
+  content:"*";
+  color:red;
+}

@@ -12,6 +12,10 @@
           <th scope="col">Name</th>
           <th scope="col">User Name</th>
           <th scope="col">Role</th>
+          <th scope="col">Batch Number</th>
+          <th scope="col">Branch</th>
+          <th scope="col">Region</th>
+          <th scope="col">Province</th>
           <th scope="col">Api Key</th>
           <th scope="col">Status</th>
           <th scope="col">User Created</th>
@@ -31,6 +35,18 @@
           <td>
             {{user.role}}
             </td>
+           <td>
+             {{user.batchNumber}}
+          </td>
+          <td>
+              {{user.branch}}
+           </td>
+           <td>
+              {{user.region}}
+           </td>
+           <td>
+              {{user.province}}
+           </td>
           <td>
             {{user.apiKey}}
           </td>
@@ -39,7 +55,8 @@
           </td>
           <td>
             {{user.createdAt}}
-          </td>   <td>
+          </td>
+          <td>
             {{user.expiration}}
             </td>
           <td>

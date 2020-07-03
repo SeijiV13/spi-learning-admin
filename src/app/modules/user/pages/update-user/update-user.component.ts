@@ -34,12 +34,15 @@ export class UpdateUserComponent implements OnInit {
       name: ['', Validators.required],
       username: ['', Validators.required],
       role: ['', Validators.required],
-      password: ['', Validators.required],
       apiKey: ['', Validators.required],
       status: [''],
       createdAt: [''],
       expiration: [''],
       lastLoggedIn: [''],
+      batchNumber: ['', Validators.required],
+      branch: ['', Validators.required],
+      province: ['', Validators.required],
+      region: ['', Validators.required],
       courses: this.fb.array([
 
       ])
@@ -95,7 +98,14 @@ export class UpdateUserComponent implements OnInit {
       const user = {
         id: this.form.controls.id.value,
         name: this.form.controls.name.value,
+        username: this.form.controls.username.value,
+        role: this.form.controls.role.value,
         apiKey: this.form.controls.apiKey.value,
+        batchNumber: this.form.controls.batchNumber.value,
+        branch: this.form.controls.branch.value,
+        province: this.form.controls.province.value,
+        region: this.form.controls.region.value,
+        expiration: this.form.controls.expiration.value,
         courses: [],
       };
       for (const course of this.courses.controls) {
