@@ -7,6 +7,9 @@ const routes: Routes = [
     children: [
       {
         path: 'courses', loadChildren:() => import('../course/course.module').then((m) => m.CourseModule)
+      },
+      {
+        path: 'users', loadChildren: () => import('../user/user.module').then((m) => m.UserModule)
       }
     ]
   },

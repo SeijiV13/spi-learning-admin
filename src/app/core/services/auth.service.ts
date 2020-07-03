@@ -13,7 +13,7 @@ constructor(private http: HttpClient) { }
 
 
    login(user): Observable<any> {
-    return this.http.post(`${environment.url}/auth/login`, user).pipe(
+    return this.http.post(`${environment.url}/auth/adlogin`, user).pipe(
       map(data => data),
       catchError(error => throwError(error))
     );

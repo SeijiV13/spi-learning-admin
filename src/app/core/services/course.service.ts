@@ -21,7 +21,7 @@ constructor(private http: HttpClient) { }
    }
 
    getCourse(): Observable<any> {
-    return this.http.get(`${environment.url}/course`).pipe(
+    return this.http.get(`${environment.url}/course/get/ad`).pipe(
       map(data => data),
       catchError(error => throwError(error))
     );
