@@ -9,7 +9,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./list-user.component.css']
 })
 export class ListUserComponent implements OnInit {
-  users: [];
+  users: any[];
+  filteredUser: any[] ;
   constructor(private router: Router,
               private userService: UserService,
               private toastr: ToastrService) { }
@@ -25,6 +26,7 @@ export class ListUserComponent implements OnInit {
   getUsers() {
      this.userService.getUsers().subscribe((data) => {
        this.users = data;
+       this.filteredUser = data;
      });
   }
 
@@ -38,6 +40,22 @@ export class ListUserComponent implements OnInit {
       this.toastr.success('Successfully deleted user', 'Success!');
       this.getUsers();
     });
+  }
+
+  filterResults(event) {
+    const value = event.target.value;
+    if (value) {
+      this.filteredUser = this.users.filter((data: any) =>
+        data.name.includes(value) ||
+        data.username.includes(value) ||
+        data.batchNumber.includes(value) ||
+        data.region.includes(value) ||
+        data.province.includes(value) ||
+        data.branch.includes(value)
+      );
+    } else {
+      this.filteredUser = this.users;
+    }
   }
 
 }
