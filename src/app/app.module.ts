@@ -1,3 +1,4 @@
+import { SessionExpiredComponent } from './core/components/modals/session-expired/session-expired.component';
 import { NotFoundComponent } from './core/pages/not-found/not-found.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,7 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
-    AppComponent, NotFoundComponent
+    AppComponent, NotFoundComponent, SessionExpiredComponent
   ],
   imports: [
     BrowserModule,
@@ -60,6 +61,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provide: HTTP_INTERCEPTORS,
     useClass: ApiKeyInterceptor,
     multi: true}],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SessionExpiredComponent]
 })
 export class AppModule { }

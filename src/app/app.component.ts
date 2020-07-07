@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'spi-learning-admin';
+  constructor(private router: Router) {
+    if ( localStorage.getItem('token')) {
+      if (this.router.url === '/') {
+        this.router.navigate(['/home/users/list']);
+      }
+    }
+  }
 }

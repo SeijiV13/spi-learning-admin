@@ -22,8 +22,12 @@ export class NavbarComponent implements OnInit {
  }
 
  logoutApp() {
-   this.router.navigate(['/']);
- }
+  localStorage.removeItem('token');
+  localStorage.removeItem('name');
+  localStorage.removeItem('idus');
+  localStorage.removeItem('userk');
+  this.router.navigate(['/']);
+}
 
 
  listenToRouter() {

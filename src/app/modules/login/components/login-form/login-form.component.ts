@@ -94,12 +94,13 @@ export class LoginFormComponent implements OnInit {
         localStorage.setItem('userk', data.userk);
         localStorage.setItem('idus', data.idus);
         localStorage.setItem('name', data.name);
-        this.router.navigate(['/home/courses/list']);
+        this.router.navigate(['/home/users/list']);
         this.ngxService.stop();
       },
       error => {
         this.ngxService.stop();
         if(error.error) {
+
           this.toastr.error(error.error.message, 'Server Errror');
         } else {
           this.toastr.error('Something went wrong please contact server administrator', 'Server Errror');

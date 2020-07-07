@@ -1,11 +1,17 @@
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { SessionExpiredComponent } from '../components/modals/session-expired/session-expired.component';
 
 
 @Injectable()
 export class ApiKeyInterceptor implements HttpInterceptor {
-    constructor() { }
+    constructor(private config: NgbModalConfig, private modalService: NgbModal, private loadr: NgxUiLoaderService) {
+      config.backdrop = 'static';
+     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add auth header with jwt if user is logged in and request is to the api url
@@ -22,6 +28,17 @@ export class ApiKeyInterceptor implements HttpInterceptor {
             });
         }
 
-        return next.handle(request);
+        return next.handle(request).pipe(catchError(err => this.handleError(err, next, request)));
+    }
+
+
+    private handleError(error: any, handler: HttpHandler, req: HttpRequest<any>) {
+      if (error.status === 401) {
+        this.loadr.stop();
+        this.modalService.open(SessionExpiredComponent);
+        return of(null);
+      } else {
+        return throwError(error);
+      }
     }
 }
