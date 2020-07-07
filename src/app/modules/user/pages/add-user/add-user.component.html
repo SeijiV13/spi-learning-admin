@@ -38,7 +38,11 @@
 
 
             <label for="password">Password</label>
-            <input formControlName="password" type="" class="form-control" id="" aria-describedby="name">
+            <div  class="input-group mb-2">
+                <div (click)="generatePassword()" class="input-group-text"><i-bs name="tools" class="plus-circle-fill" ></i-bs></div>
+                    <input formControlName="password" type="" class="form-control" id="" aria-describedby="name">
+            </div>
+            <small id="emailHelp" class="form-text text-muted">You can generate the password automatically by clicking the tool icon</small>
 
             <label for="name">API Key</label>
             <input formControlName="apiKey" type="" class="form-control" id="" aria-describedby="name">

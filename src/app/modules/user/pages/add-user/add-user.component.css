@@ -34,3 +34,8 @@ label:after {
   content:"*";
   color:red;
 }
+
+
+.input-group-text {
+  cursor: pointer;
+}
