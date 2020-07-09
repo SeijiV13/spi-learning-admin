@@ -47,3 +47,18 @@ img {
     display: none;
   }
 }
+
+.logo-connect  {
+  background: url('../../../../assets/images//spiconnect.png');
+  width: 70px;
+  height: 70px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+
+}
+
+.spi-logo {
+  margin-right: 30px;
+  margin-top: -18px;
+}

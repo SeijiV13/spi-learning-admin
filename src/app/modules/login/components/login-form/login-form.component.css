@@ -144,3 +144,11 @@ input::-moz-focus-inner {
   background-repeat: no-repeat;
   background-size: contain;
 }
+
+.logo-connect  {
+  background: url('../../../../../assets/images/spiconnect.png');
+  width: 150px;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
