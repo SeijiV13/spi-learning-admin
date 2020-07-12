@@ -138,6 +138,7 @@ input::-moz-focus-inner {
 }
 
 .logo-login  {
+  margin-top:30px;
   background: url(https://spi.ph/wp-content/uploads/2019/03/logo.png);
   width: 100px;
   height: 100px;
@@ -151,4 +152,11 @@ input::-moz-focus-inner {
   height: 150px;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+
+.page-logo {
+  width: 640px;
+  display: flex;
+  justify-content: inherit;
 }
