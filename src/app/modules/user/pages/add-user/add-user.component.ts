@@ -109,7 +109,7 @@ export class AddUserComponent implements OnInit {
   }
 
   trim(x) {
-    return x.replace(/^\s+|\s+$/gm,'');
+    return x.replace(/\s+/g, '');
   }
 
   generatePassword() {

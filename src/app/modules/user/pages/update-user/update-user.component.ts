@@ -77,7 +77,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   addExistingCourse(course) {
-    this.courses.push(this.newCourse(course));
+    this.courses.push(this.newCourse(course.desc));
   }
 
   addCourse() {
@@ -122,7 +122,7 @@ export class UpdateUserComponent implements OnInit {
   }
 
   trim(x) {
-    return x.replace(/^\s+|\s+$/gm,'');
+    return x.replace(/\s+/g, '');
   }
 
   back() {
