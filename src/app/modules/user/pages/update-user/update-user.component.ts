@@ -109,7 +109,7 @@ export class UpdateUserComponent implements OnInit {
         courses: [],
       };
       for (const course of this.courses.controls) {
-        user.courses.push({desc: course.value.course, value: course.value.course.trim().toLowerCase()});
+        user.courses.push({desc: course.value.course, value: this.trim(course.value.course).toLowerCase()});
       }
       this.userService.updateUser(user).subscribe((data) => {
         this.loader.stop();
@@ -119,6 +119,10 @@ export class UpdateUserComponent implements OnInit {
 
     }
 
+  }
+
+  trim(x) {
+    return x.replace(/^\s+|\s+$/gm,'');
   }
 
   back() {

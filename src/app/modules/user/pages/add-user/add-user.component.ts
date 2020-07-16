@@ -92,7 +92,7 @@ export class AddUserComponent implements OnInit {
         courses: [],
       };
       for (const course of this.courses.controls) {
-        user.courses.push({desc: course.value.course, value: course.value.course.trim().toLowerCase()});
+        user.courses.push({desc: course.value.course, value: this.trim(course.value.course).toLowerCase()});
       }
       this.userService.createUser(user).subscribe((data) => {
         this.loader.stop();
@@ -106,6 +106,10 @@ export class AddUserComponent implements OnInit {
 
   back() {
     this.router.navigate(['/home/users/list']);
+  }
+
+  trim(x) {
+    return x.replace(/^\s+|\s+$/gm,'');
   }
 
   generatePassword() {
