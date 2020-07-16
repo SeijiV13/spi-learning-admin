@@ -92,7 +92,7 @@ export class AddUserComponent implements OnInit {
         courses: [],
       };
       for (const course of this.courses.controls) {
-        user.courses.push(course.value.course);
+        user.courses.push({desc: course.value.course, value: course.value.course.trim().toLowerCase()});
       }
       this.userService.createUser(user).subscribe((data) => {
         this.loader.stop();

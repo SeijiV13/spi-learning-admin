@@ -109,7 +109,7 @@ export class UpdateUserComponent implements OnInit {
         courses: [],
       };
       for (const course of this.courses.controls) {
-        user.courses.push(course.value.course);
+        user.courses.push({desc: course.value.course, value: course.value.course.trim().toLowerCase()});
       }
       this.userService.updateUser(user).subscribe((data) => {
         this.loader.stop();
