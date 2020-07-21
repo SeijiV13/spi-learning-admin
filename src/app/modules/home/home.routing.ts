@@ -10,6 +10,9 @@ const routes: Routes = [
       },
       {
         path: 'users', loadChildren: () => import('../user/user.module').then((m) => m.UserModule)
+      },
+      {
+        path: 'videos', loadChildren: () => import('../video/video.module').then((m) => m.VideoModule)
       }
     ]
   },

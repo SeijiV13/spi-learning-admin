@@ -91,7 +91,7 @@ export class LoginFormComponent implements OnInit {
       this.ngxService.start();
       this.authService.login(user).subscribe((data) => {
         localStorage.setItem('token', data.jwt);
-        localStorage.setItem('userk', data.userk);
+        localStorage.setItem('userk', 'jx4D84uVVNyhITBwUM0ITWNFLp3yPMSMqmJjNhjNX4lTGWpamYzrgRM3XBjjTTzt');
         localStorage.setItem('idus', data.idus);
         localStorage.setItem('name', data.name);
         this.router.navigate(['/home/users/list']);
@@ -99,7 +99,7 @@ export class LoginFormComponent implements OnInit {
       },
       error => {
         this.ngxService.stop();
-        if(error.error) {
+        if (error.error) {
 
           this.toastr.error(error.error.message, 'Server Errror');
         } else {

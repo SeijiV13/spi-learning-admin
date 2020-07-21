@@ -1,0 +1,37 @@
+<div class="header">
+  <h3 class="title">Videos</h3>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th>Image</th>
+        <th scope="col">Video Name</th>
+        <th scope="col">Share</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let video of videos; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <th scope="row">
+          <img class="video-img" [src]="video.poster">
+        </th>
+        <td>
+          {{video.title}}
+        </td>
+        <td>
+            <button [ngbPopover]="share" (click)="setLink(video.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Share</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #share>
+    Copy link to share
+    <input class="form-control" [value]="link">
+  </ng-template>

@@ -9,8 +9,9 @@
         <h5 class="sidebar-title"><i-bs name="collection-play-fill"></i-bs> Menu</h5>
         <br><br>
         <ul>
-          <li [ngClass]="activeRoute === 'user' ? 'selected' : ''" (click)="redirect('user')"><i-bs name="people-fill"></i-bs> Add User</li>
-          <li [ngClass]="activeRoute === 'course' ? 'selected' : ''" (click)="redirect('courses')"><i-bs name="folder-fill"></i-bs> Add Course</li>
+          <li [ngClass]="activeRoute === 'user' ? 'selected' : ''" (click)="redirect('users')"><i-bs name="people-fill"></i-bs> Manage Users</li>
+          <li [ngClass]="activeRoute === 'course' ? 'selected' : ''" (click)="redirect('courses')"><i-bs name="folder-fill"></i-bs> Manage Courses</li>
+          <li [ngClass]="activeRoute === 'video' ? 'selected' : ''" (click)="redirect('videos')"><i-bs name="film"></i-bs> Video List</li>
         </ul>
     </ng-sidebar>
 

@@ -21,8 +21,10 @@ export class HomeContainerComponent implements OnInit {
   checkRoute() {
     if(this.router.url.includes('courses')) {
       this.activeRoute = 'course';
-    } else {
+    } else if(this.router.url.includes('users')) {
       this.activeRoute = 'user';
+    } else {
+      this.activeRoute = 'video';
     }
   }
 
@@ -30,9 +32,12 @@ export class HomeContainerComponent implements OnInit {
     if (route === 'courses') {
       this.activeRoute = 'course';
       this.router.navigate([`/home/courses/list`]);
-    } else {
+    } else if(route === 'users') {
       this.activeRoute = 'user';
-      this.router.navigate([`/home/users/list`])
+      this.router.navigate([`/home/users/list`]);
+    } else {
+      this.activeRoute = 'video';
+      this.router.navigate([`/home/videos`]);
     }
   }
 
