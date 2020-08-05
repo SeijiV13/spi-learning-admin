@@ -1,0 +1,62 @@
+
+<div class="header">
+  <h3 class="title">Reports</h3>
+  <span class="add" (click)="generateReport()"> <i-bs name="newspaper" class="plus-circle-fill" ></i-bs> Generate Report</span>
+</div>
+<div class="card">
+  <div class="card-body">
+      <label>Filter</label>
+      <input class="form-control" (keyup)="filterResults($event)">
+  </div>
+</div>
+
+<br>
+<div class="card">
+  <div class="card-body">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Batch Number</th>
+        <th scope="col">Total Videos</th>
+        <th scope="col">Watched Videos</th>
+        <th scope="col">Percent Completed</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of filteredUser; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          {{user.name}}
+        </td>
+         <td>
+           {{user.batchNumber}}
+         </td>
+         <td>
+           {{user.totalVideos ? user.totalVideos: 0}}
+         </td>
+         <td>
+            <ng-template #popContent>
+               <ol>
+                   <li *ngFor="let data of user.watchedTitle">
+                     {{data.title}}
+                   </li>
+               </ol>
+            </ng-template>
+            <ng-template #popTitle>Watched Videos</ng-template>
+            <button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" [popoverTitle]="popTitle">
+                {{user.watched.length}}
+            </button>
+         </td>
+         <td>
+           {{getPercentage(user.totalVideos, user.watched.length) != undefined ? getPercentage(user.totalVideos, user.watched.length) : 'Not yet logged in'}}
+        </td>
+
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

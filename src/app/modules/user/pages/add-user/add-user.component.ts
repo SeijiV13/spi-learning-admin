@@ -89,6 +89,7 @@ export class AddUserComponent implements OnInit {
         province: this.form.controls.province.value,
         region: this.form.controls.region.value,
         expiration: this.form.controls.expiration.value,
+        totalVideos: 0,
         courses: [],
       };
       for (const course of this.courses.controls) {

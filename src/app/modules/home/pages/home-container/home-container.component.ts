@@ -32,12 +32,15 @@ export class HomeContainerComponent implements OnInit {
     if (route === 'courses') {
       this.activeRoute = 'course';
       this.router.navigate([`/home/courses/list`]);
-    } else if(route === 'users') {
+    } else if (route === 'users') {
       this.activeRoute = 'user';
       this.router.navigate([`/home/users/list`]);
-    } else {
+    } else if (route === 'videos') {
       this.activeRoute = 'video';
       this.router.navigate([`/home/videos`]);
+    } else if (route === 'reports') {
+      this.activeRoute = 'reports';
+      this.router.navigate([`/home/reports/list`]);
     }
   }
 

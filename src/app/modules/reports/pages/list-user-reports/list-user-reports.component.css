@@ -1,0 +1,15 @@
+.header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.add {
+  cursor: pointer;
+}
+.add:hover {
+  text-decoration: underline;
+}
+
+th {
+  white-space: nowrap;
+}

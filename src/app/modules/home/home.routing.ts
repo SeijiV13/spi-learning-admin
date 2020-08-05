@@ -13,6 +13,9 @@ const routes: Routes = [
       },
       {
         path: 'videos', loadChildren: () => import('../video/video.module').then((m) => m.VideoModule)
+      },
+      {
+        path: 'reports', loadChildren: () => import('../reports/reports.module').then((m) => m.ReportsModule)
       }
     ]
   },
