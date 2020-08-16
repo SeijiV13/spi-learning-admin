@@ -46,7 +46,12 @@ img {
   .company-name {
     display: none;
   }
+  .spi-logo {
+    display: none;
+  }
 }
+
+
 
 .logo-connect  {
   background: url('../../../../assets/images//spiconnect.png');

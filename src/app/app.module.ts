@@ -13,9 +13,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShareVideoComponent } from './core/components/modals/share-video/share-video.component';
 @NgModule({
   declarations: [
-    AppComponent, NotFoundComponent, SessionExpiredComponent
+    AppComponent, NotFoundComponent, SessionExpiredComponent, ShareVideoComponent
   ],
   imports: [
     BrowserModule,
