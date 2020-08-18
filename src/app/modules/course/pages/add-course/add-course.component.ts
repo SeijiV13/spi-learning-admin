@@ -37,7 +37,8 @@ export class AddCourseComponent implements OnInit {
 
   newCourse() {
     return this.fb.group({
-      course: ['', Validators.required]
+      course: ['', Validators.required],
+      numberOfUc: ['', Validators.required]
     });
   }
 

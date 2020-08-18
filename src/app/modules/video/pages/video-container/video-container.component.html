@@ -2,8 +2,9 @@
   <h3 class="title">Videos</h3>
 </div>
 
-<div class="card">
+<div *ngFor="let course of courses" class="card">
   <div class="card-body">
+    <h3>{{course.name}}</h3>
     <table class="table table-striped">
       <thead>
       <tr>
@@ -14,21 +15,40 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let video of videos; let i = index">
-        <th scope="row">{{ i + 1 }}</th>
-        <th scope="row">
-          <img class="video-img" [src]="video.poster">
-        </th>
-        <td>
-          {{video.title}}
-        </td>
-        <td>
-            <button (click)="setLink(video.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Share</button>
-        </td>
-      </tr>
+      <ng-container *ngFor="let item of finalGroup[course.group] | keyvalue;  let i = index">
+          <tr >
+            <td colspan="4">
+                Unit Competency {{i + 1}}
+            </td>
+          </tr>
+          <tr >
+              <td colspan="3">
+                  <label>Add Description</label>
+                  <textarea [value]="finalGroup[course.group][item.key].description ? finalGroup[course.group][item.key].description: ''" id="textarea-{{i}}" class="form-control"></textarea>
+              </td>
+              <td>
+                  <button (click)="addDescription(course.group + 'uc' + (i + 1), i)"  class="btn btn-info">  Save</button>
+              </td>
+          </tr>
+          <tr *ngFor="let video of finalGroup[course.group][item.key].video; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <th scope="row">
+                <img class="video-img" [src]="video.poster">
+              </th>
+              <td>
+                {{video.title}}
+              </td>
+              <td>
+                  <button (click)="setLink(video.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Share</button>
+              </td>
+            </tr>
+      </ng-container>
+
+
       </tbody>
     </table>
   </div>
+  <br>
 </div>
 
 <ng-template #share>
