@@ -49,13 +49,16 @@ export class VideoContainerComponent implements OnInit {
         this.finalGroup[key] = {};
         let uc = '';
         for (const video of  this.groupVideos[key]) {
-           uc = video.tags[0].charAt(video.tags[0].length - 6) +
-           video.tags[0].charAt(video.tags[0].length - 5)  + video.tags[0].charAt(video.tags[0].length - 4);
-           if (!this.finalGroup[key][uc]) {
+          //  uc = video.tags[0].charAt(video.tags[0].length - 6) +
+          //  video.tags[0].charAt(video.tags[0].length - 5)  + video.tags[0].charAt(video.tags[0].length - 4);
+          uc = 'uc' + video.tags[0].split('uc')[1].split('lo')[0];
+          console.log(uc);
+          if (!this.finalGroup[key][uc]) {
             this.finalGroup[key][uc] = {};
-            this.finalGroup[key][uc].description = data2.find((data3) => data3.name === key + uc).description;
+            this.finalGroup[key][uc].description = data2.find((data3) => data3.name === key + uc)
+            ? data2.find((data3) => data3.name === key + uc).description : '';
            }
-           if (this.finalGroup[key][uc].video) {
+          if (this.finalGroup[key][uc].video) {
             this.finalGroup[key][uc].video.push(video);
            } else {
             this.finalGroup[key][uc].video = [video];

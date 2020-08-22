@@ -44,5 +44,9 @@ export class HomeContainerComponent implements OnInit {
     }
   }
 
+  toggleSidebar() {
+    this.opened = !this.opened;
+  }
+
 
 }
