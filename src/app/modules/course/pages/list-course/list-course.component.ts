@@ -35,4 +35,11 @@ export class ListCourseComponent implements OnInit {
     });
   }
 
+  updateCourse(course, i) {
+    const input = document.getElementById(`${i}-uc`) as any;
+    this.courseService.updateCourse(course.id, input.value).subscribe((data) => {
+      this.toastr.success('Successfully updated course', 'Success!');
+    });
+  }
+
 }

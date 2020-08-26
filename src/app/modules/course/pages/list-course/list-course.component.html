@@ -20,7 +20,10 @@
         <td>
           {{course.name}}
         </td>
-        <td>{{course.numberOfUc}}</td>
+        <td>
+          <input id="{{i}}-uc" style="width:60px; float:left" class="form-control" type="number" [value]="course.numberOfUc">
+          <button  style="float:left" (click)="updateCourse(course, i)" class="btn btn-info"> Update </button>
+        </td>
         <td>
           <button (click)="deleteCourse(course.id)" class="btn btn-info">  <i-bs name="trash" class="menu-button" ></i-bs> </button>
         </td>

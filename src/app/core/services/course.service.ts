@@ -27,6 +27,13 @@ constructor(private http: HttpClient) { }
     );
    }
 
+   updateCourse(courseId, numberOfUc) {
+    return this.http.put(`${environment.url}/course`, {courseId, numberOfUc}).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
+
    deleteCourse(id): Observable<any> {
     return this.http.delete(`${environment.url}/course/${id}`).pipe(
       map(data => data),
@@ -40,6 +47,7 @@ constructor(private http: HttpClient) { }
       catchError(error => throwError(error))
     );
    }
+
 
    sortVideos(videos, courseId, uc) {
     return this.http.post(`${environment.url}/course/overridevideos`, {videos, courseId, uc}).pipe(
