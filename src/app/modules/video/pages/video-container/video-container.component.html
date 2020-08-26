@@ -2,53 +2,107 @@
   <h3 class="title">Videos</h3>
 </div>
 
-<div *ngFor="let course of courses" class="card">
-  <div class="card-body">
-    <h3>{{course.name}}</h3>
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th>Image</th>
-        <th scope="col">Video Name</th>
-        <th scope="col">Share</th>
-      </tr>
-      </thead>
-      <tbody>
-      <ng-container *ngFor="let item of finalGroup[course.group] | keyvalue;  let i = index">
-          <tr >
-            <td colspan="4">
-                Unit Competency {{i + 1}}
-            </td>
-          </tr>
-          <tr >
-              <td colspan="3">
-                  <label>Add Description</label>
-                  <textarea [value]="finalGroup[course.group][item.key].description ? finalGroup[course.group][item.key].description: ''" id="textarea-{{i}}" class="form-control"></textarea>
-              </td>
-              <td>
-                  <button (click)="addDescription(course.group + 'uc' + (i + 1), i)"  class="btn btn-info">  Save</button>
-              </td>
-          </tr>
-          <tr *ngFor="let video of finalGroup[course.group][item.key].video; let i = index">
-              <th scope="row">{{ i + 1 }}</th>
-              <th scope="row">
-                <img class="video-img" [src]="video.poster">
-              </th>
-              <td>
-                {{video.title}}
-              </td>
-              <td>
-                  <button (click)="setLink(video.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Share</button>
-              </td>
-            </tr>
-      </ng-container>
+<div class="row">
+  <div class="col-sm-5">
+        <div  class="card">
+            <div class="card-body" [formGroup]="courseForm">
+               Select Course
+               <select formControlName="course" class="form-control" (change)="getSelectedCourse(); getSelectedVideos('1')">
+                 <option *ngFor="let data of courses" [value]="data.id">{{data.name}}</option>
+               </select>
+
+               Select Unit Competency
+               <select formControlName="uc"  (change)="getSelectedVideos()" class="form-control">
+                  <option *ngFor="let data of uc" [value]="data.uc">{{data.uc}}</option>
+               </select>
+               <br>
+               <button (click)="addVideos()"  class="btn btn-info" [disabled]="addedVideos.length < 1"> Add Videos</button>
+            </div>
+            <br>
+        </div>
+        <div  class="card" style="padding:10px">
+            <ngx-sortable [items]="selectedVideos" [name]="'Sort Videos'" [listStyle]="listStyle" (listSorted)="listSorted($event)">
+                <ng-template let-item>
+                    <div class="sortable-list-item">
+                    {{item.title}}
+                    </div>
+                </ng-template>
+            </ngx-sortable>
+            <button (click)="sortVideos()"  class="btn btn-info"> Sort</button>
+            <br>
+        </div>
+        <div class="card">
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Video Name</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of selectedVideos; let i = index">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>
+                          {{data.title}}
+                        </td>
+                        <td>
+                            <button (click)="deleteVideo(data.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Delete</button>
+                        </td>
+                      </tr>
 
 
-      </tbody>
-    </table>
+                </tbody>
+              </table>
+            </div>
+            <br>
+          </div>
   </div>
-  <br>
+  <div class="col-sm-7">
+      <div class="card">
+          <div class="card-body">
+              <label>Filter</label>
+              <input class="form-control" (keyup)="filterResults($event)">
+          </div>
+        </div>
+    <div  class="card">
+      <div class="card-body">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th></th>
+            <th>Image</th>
+            <th scope="col">Video Name</th>
+            <th scope="col">Share</th>
+          </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let data of filteredVideos; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <th>
+                    <input type="checkbox" (change)="toggleVideo($event, data)">
+                  </th>
+                  <th scope="row">
+                    <img class="video-img" [src]="data.poster">
+                  </th>
+                  <td>
+                    {{data.title}}
+                  </td>
+                  <td>
+                      <button (click)="setLink(data.id)"  class="btn btn-info">  <i-bs name="arrow-up-right"></i-bs> Share</button>
+                  </td>
+                </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+      <br>
+    </div>
+  </div>
+
 </div>
 
 <ng-template #share>

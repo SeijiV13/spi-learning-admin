@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { UcService } from './../../../../core/services/uc.service';
 import { CourseService } from './../../../../core/services/course.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,69 +13,109 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./video-container.component.css']
 })
 export class VideoContainerComponent implements OnInit {
+  courseForm: FormGroup;
   videos: any = [];
+  filteredVideos = [];
+  addedVideos = [];
+  selectedVideos = [];
   link = '';
   courses = [];
+  uc = [];
   groupVideos = {};
   finalGroup = {};
+  listStyle = {
+    width:'100%', // width of the list defaults to 300,
+    height: '250px', // height of the list defaults to 250,
+    dropZoneHeight: '70px' // height of the dropzone indicator defaults to 50
+    };
+
+    //for form after save
+    saveCourse = '';
+    saveUc = '';
   constructor(private videoService: VideoService,
               private modalService: NgbModal,
               private courseService: CourseService,
               private ucService: UcService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private fb: FormBuilder) { }
 
   ngOnInit() {
     this.getVideos();
+    this.initCourseForm();
+    this.getCourses();
+  }
+
+  initCourseForm() {
+    this.courseForm = this.fb.group({
+      course: [''],
+      uc: ['1']
+    });
+  }
+
+
+  getCourses() {
+    this.courseService.getCourse().subscribe((data) => {
+      this.courses = data;
+      if (this.courses.length > 0) {
+          this.courseForm.controls.course.setValue(this.courses[0].id);
+          this.getInitialSelectedVideos(this.courses[0].videos);
+          this.getInitialSelectedCourse(this.courses[0].numberOfUc);
+      }
+    });
+  }
+
+  getCoursesOnAction() {
+    this.courseService.getCourse().subscribe((data) => {
+      this.courses = data;
+      setTimeout(() => {
+        this.courseForm.controls.course.setValue(this.saveCourse);
+        this.courseForm.controls.uc.setValue(this.saveUc);
+      }, 10);
+
+
+      this.getSelectedVideos();
+      this.getSelectedCourse();
+    });
+  }
+
+
+
+  getInitialSelectedVideos(videos) {
+    this.selectedVideos = videos.filter(data => data.uc ===  this.courseForm.controls.uc.value);
+  }
+
+  getInitialSelectedCourse(course) {
+    this.uc = []
+    let i = 1;
+    while (i <= course) {
+       this.uc.push({uc: i});
+       i++;
+     }
+  }
+
+  getSelectedCourse() {
+    this.uc = [];
+    let i = 1;
+    const id = this.courseForm.controls.course.value;
+    const course = this.courses.find((data) => data.id === id);
+    while (i <= course.numberOfUc) {
+       this.uc.push({uc: i});
+       i++;
+     }
+    this.courseForm.controls.uc.setValue('1');
+  }
+
+  getSelectedVideos(num?: string) {
+    const id = this.courseForm.controls.course.value;
+    const course = this.courses.find((data) => data.id === id);
+    this.selectedVideos = course.videos.filter(data => data.uc ===  (num ? num : this.courseForm.controls.uc.value));
   }
 
   getVideos() {
     this.videoService.getVideos().subscribe((data: any) => {
       this.videos = data.rows;
-      this.getCourses();
+      this.filteredVideos = data.rows;
     });
-  }
-
-  getCourses() {
-    this.courseService.getCourse().subscribe((data: any) => {
-      this.ucService.getAllUc().subscribe((data2: any) => {
-
-        for (const course of data) {
-          const group = course.name.replace(/\s/g, '').toLowerCase();
-          course.group = group;
-          this.groupVideos[group] = this.videos.filter((video) => video.tags[0].includes(group));
-      }
-        this.courses = data;
-
-        for (const key of Object.keys(this.groupVideos)) {
-        this.finalGroup[key] = {};
-        let uc = '';
-        for (const video of  this.groupVideos[key]) {
-          //  uc = video.tags[0].charAt(video.tags[0].length - 6) +
-          //  video.tags[0].charAt(video.tags[0].length - 5)  + video.tags[0].charAt(video.tags[0].length - 4);
-          uc = 'uc' + video.tags[0].split('uc')[1].split('lo')[0];
-          console.log(uc);
-          if (!this.finalGroup[key][uc]) {
-            this.finalGroup[key][uc] = {};
-            this.finalGroup[key][uc].description = data2.find((data3) => data3.name === key + uc)
-            ? data2.find((data3) => data3.name === key + uc).description : '';
-           }
-          if (this.finalGroup[key][uc].video) {
-            this.finalGroup[key][uc].video.push(video);
-           } else {
-            this.finalGroup[key][uc].video = [video];
-           }
-
-         }
-        if (this.finalGroup[key][uc]) {
-          if (this.finalGroup[key][uc].video) {
-            this.finalGroup[key][uc].video = this.finalGroup[key][uc].video.sort((a, b) =>
-            parseInt(a.tags[0].charAt(a.tags[0].length - 1)) - parseInt(b.tags[0].charAt(b.tags[0].length - 1)));
-          }
-
-         }
-      }
-    });
-  });
   }
 
 
@@ -94,6 +135,69 @@ export class VideoContainerComponent implements OnInit {
     };
     this.ucService.updateUc(uc).subscribe((data) => {
       this.toastr.success('', 'Successfully updated description');
+    });
+  }
+
+  toggleVideo(event, data) {
+    if (event.target.checked) {
+      this.addedVideos.push(data);
+    } else {
+      this.addedVideos = this.addedVideos.filter(data2 => data2.id !== data.id);
+    }
+  }
+
+  addVideos() {
+    const course = this.courseForm.controls.course.value;
+    const uc = this.courseForm.controls.uc.value;
+    this.courseService.addVideos(this.addedVideos, course, uc).subscribe(data => {
+      this.getVideos();
+      this.saveCourse = course;
+      this.saveUc = uc;
+      this.getCoursesOnAction();
+      this.addedVideos = [];
+      this.toastr.success('Successfully added videos', 'Success!');
+    });
+  }
+
+  listSorted(data) {
+    this.selectedVideos = data;
+  }
+
+
+  sortVideos() {
+    const course = this.courseForm.controls.course.value;
+    const uc = this.courseForm.controls.uc.value;
+    this.courseService.sortVideos(this.selectedVideos, course, uc).subscribe(data => {
+      this.getVideos();
+      this.saveCourse = course;
+      this.saveUc = uc;
+      this.getCoursesOnAction();
+      this.addedVideos = [];
+      this.toastr.success('Successfully sorted videos', 'Success!');
+    });
+  }
+
+  filterResults(event) {
+    const value = event.target.value;
+    if (value) {
+      this.filteredVideos = this.videos.filter((data: any) =>
+      data.title.toLowerCase().includes(value.toLowerCase())
+      );
+    } else {
+      this.filteredVideos = this.videos;
+    }
+  }
+
+  deleteVideo(id) {
+    const course = this.courseForm.controls.course.value;
+    const uc = this.courseForm.controls.uc.value;
+    this.courseService.deleteVideo(course, id).subscribe(data => {
+      this.getVideos();
+      this.saveCourse = course;
+      this.saveUc = uc;
+      this.getCoursesOnAction();
+      this.addedVideos = [];
+      this.toastr.success('Successfully deleted video', 'Success!');
     });
   }
 

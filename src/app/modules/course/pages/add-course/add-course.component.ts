@@ -59,7 +59,7 @@ export class AddCourseComponent implements OnInit {
       this.loader.start();
       for (const course of this.courses.controls) {
          const subs = [];
-         subs.push(this.courseService.createCourse({ name: course.value.course}))
+         subs.push(this.courseService.createCourse({ name: course.value.course, numberOfUc: course.value.numberOfUc}))
          forkJoin(subs).subscribe((data) => {
           this.loader.stop();
           this.toastr.success('Successfully added course/s', 'Success!');

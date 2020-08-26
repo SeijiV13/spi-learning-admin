@@ -10,7 +10,7 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Course Name</th>
-        <th scope="col">Enrolled Students</th>
+        <th scope="col">Number of Unit Competencies</th>
         <th scope="col">Action</th>
       </tr>
       </thead>
@@ -20,7 +20,7 @@
         <td>
           {{course.name}}
         </td>
-        <td>{{course.enrolledStudents}}</td>
+        <td>{{course.numberOfUc}}</td>
         <td>
           <button (click)="deleteCourse(course.id)" class="btn btn-info">  <i-bs name="trash" class="menu-button" ></i-bs> </button>
         </td>

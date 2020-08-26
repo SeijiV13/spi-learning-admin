@@ -10,9 +10,11 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { ToastrModule } from 'ngx-toastr';
 import { VideoContainerComponent } from './pages/video-container/video-container.component';
 import { VideoRoutes } from './video.routing';
+import { NgxSortableModule } from 'ngx-sortable';
 @NgModule({
   declarations: [VideoContainerComponent],
   imports: [
+    NgxSortableModule,
     CommonModule,
     NgbModule,
     NgxUiLoaderModule,

@@ -33,4 +33,25 @@ constructor(private http: HttpClient) { }
       catchError(error => throwError(error))
     );
    }
+
+   addVideos(videos, courseId, uc) {
+    return this.http.post(`${environment.url}/course/addvideos`, {videos, courseId, uc}).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
+
+   sortVideos(videos, courseId, uc) {
+    return this.http.post(`${environment.url}/course/overridevideos`, {videos, courseId, uc}).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
+
+   deleteVideo(courseId, id) {
+    return this.http.delete(`${environment.url}/course/deletevideo/${courseId}/${id}`).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
 }
