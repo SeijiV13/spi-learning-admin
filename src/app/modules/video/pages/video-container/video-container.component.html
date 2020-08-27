@@ -20,6 +20,15 @@
             </div>
             <br>
         </div>
+        <div  class="card">
+          <div class="card-body">
+              Add description
+              <input class="form-control" [(ngModel)]="description">
+             <br>
+             <button (click)="addDescription()"  class="btn btn-info"> Add Description</button>
+          </div>
+          <br>
+      </div>
         <div  class="card" style="padding:10px">
             <ngx-sortable [items]="selectedVideos" [name]="'Sort Videos'" [listStyle]="listStyle" (listSorted)="listSorted($event)">
                 <ng-template let-item>

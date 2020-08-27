@@ -14,6 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class VideoContainerComponent implements OnInit {
   courseForm: FormGroup;
+  description = '';
   videos: any = [];
   filteredVideos = [];
   addedVideos = [];
@@ -24,12 +25,12 @@ export class VideoContainerComponent implements OnInit {
   groupVideos = {};
   finalGroup = {};
   listStyle = {
-    width:'100%', // width of the list defaults to 300,
+    width: '100%', // width of the list defaults to 300,
     height: '250px', // height of the list defaults to 250,
     dropZoneHeight: '70px' // height of the dropzone indicator defaults to 50
     };
 
-    //for form after save
+    // for form after save
     saveCourse = '';
     saveUc = '';
   constructor(private videoService: VideoService,
@@ -60,6 +61,7 @@ export class VideoContainerComponent implements OnInit {
           this.courseForm.controls.course.setValue(this.courses[0].id);
           this.getInitialSelectedVideos(this.courses[0].videos);
           this.getInitialSelectedCourse(this.courses[0].numberOfUc);
+          this.getDescription();
       }
     });
   }
@@ -85,7 +87,7 @@ export class VideoContainerComponent implements OnInit {
   }
 
   getInitialSelectedCourse(course) {
-    this.uc = []
+    this.uc = [];
     let i = 1;
     while (i <= course) {
        this.uc.push({uc: i});
@@ -103,12 +105,26 @@ export class VideoContainerComponent implements OnInit {
        i++;
      }
     this.courseForm.controls.uc.setValue('1');
+    this.getDescription();
   }
 
   getSelectedVideos(num?: string) {
     const id = this.courseForm.controls.course.value;
     const course = this.courses.find((data) => data.id === id);
     this.selectedVideos = course.videos.filter(data => data.uc ===  (num ? num : this.courseForm.controls.uc.value));
+    this.getDescription();
+  }
+
+  getDescription() {
+    const id = this.courseForm.controls.course.value;
+    const uc = this.courseForm.controls.uc.value;
+    this.ucService.getUc(id, uc).subscribe((data: any) => {
+      if (data) {
+        this.description = data.description;
+      } else {
+        this.description = '';
+      }
+    });
   }
 
   getVideos() {
@@ -127,11 +143,13 @@ export class VideoContainerComponent implements OnInit {
     });
 
   }
-  addDescription(group, id) {
-    const el = document.getElementById(`textarea-${id}`) as any;
+  addDescription() {
+    const id = this.courseForm.controls.course.value;
+    const ucNumber = this.courseForm.controls.uc.value;
     const uc = {
-      name : group,
-      description: el.value
+      name : id,
+      description: this.description,
+      ucNumber
     };
     this.ucService.updateUc(uc).subscribe((data) => {
       this.toastr.success('', 'Successfully updated description');
