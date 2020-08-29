@@ -154,6 +154,28 @@ input::-moz-focus-inner {
   background-size: contain;
 }
 
+.logo-apex  {
+  background: url('../../../../../assets/images/apex.png');
+  width: 140px;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  float:left;
+
+}
+
+.logo-clutch {
+  background: url('../../../../../assets/images/clutch-digital.png');
+  width: 140px;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+  float:left;
+}
+
+
 
 .page-logo {
   width: 640px;
