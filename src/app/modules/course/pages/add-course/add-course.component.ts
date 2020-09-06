@@ -38,7 +38,8 @@ export class AddCourseComponent implements OnInit {
   newCourse() {
     return this.fb.group({
       course: ['', Validators.required],
-      numberOfUc: ['', Validators.required]
+      numberOfUc: ['', Validators.required],
+      downloadable: ['']
     });
   }
 
@@ -59,7 +60,8 @@ export class AddCourseComponent implements OnInit {
       this.loader.start();
       for (const course of this.courses.controls) {
          const subs = [];
-         subs.push(this.courseService.createCourse({ name: course.value.course, numberOfUc: course.value.numberOfUc}))
+         subs.push(this.courseService.createCourse({ name: course.value.course, numberOfUc: course.value.numberOfUc,
+          downloadable: course.value.downloadable}));
          forkJoin(subs).subscribe((data) => {
           this.loader.stop();
           this.toastr.success('Successfully added course/s', 'Success!');
