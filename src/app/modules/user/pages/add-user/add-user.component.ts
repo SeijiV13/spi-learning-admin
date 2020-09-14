@@ -1,3 +1,4 @@
+import { AdminService } from './../../../../core/services/admin.service';
 import { CourseService } from './../../../../core/services/course.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { UserService } from './../../../../core/services/user.service';
@@ -20,7 +21,8 @@ export class AddUserComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private courseService: CourseService,
-              private loader: NgxUiLoaderService) { }
+              private loader: NgxUiLoaderService,
+              private adminService: AdminService) { }
 
   ngOnInit() {
     this.initializeForm();
@@ -95,11 +97,26 @@ export class AddUserComponent implements OnInit {
       for (const course of this.courses.controls) {
         user.courses.push({desc: course.value.course, value: this.trim(course.value.course).toLowerCase()});
       }
-      this.userService.createUser(user).subscribe((data) => {
-        this.loader.stop();
-        this.toastr.success('Successfully added user', 'Success!');
-        this.router.navigate(['/home/users/list']);
-    });
+      if (user.role === 'VIEWER') {
+        this.userService.createUser(user).subscribe((data) => {
+          this.loader.stop();
+          this.toastr.success('Successfully added user', 'Success!');
+          this.router.navigate(['/home/users/list']);
+      });
+      } else {
+         const adminUser = {
+          name: user.name,
+          username: user.username,
+          role: user.role,
+          password: user.password,
+          status: 'Active',
+         };
+         this.adminService.createAdmin(adminUser).subscribe((data) => {
+          this.loader.stop();
+          this.toastr.success('Successfully added user', 'Success!');
+          this.router.navigate(['/home/users/list']);
+      });
+      }
 
     }
 
@@ -121,5 +138,23 @@ export class AddUserComponent implements OnInit {
         retVal += charset.charAt(Math.floor(Math.random() * n));
     }
     this.form.controls.password.setValue(retVal);
-}
+   }
+
+   changeInputBehavior(event) {
+     if(event.target.value === "VIEWER") {
+      this.form.controls.batchNumber.enable();
+      this.form.controls.branch.enable();
+      this.form.controls.province.enable();
+      this.form.controls.region.enable();
+      this.form.controls.apiKey.enable();
+     } else {
+      this.form.controls.batchNumber.disable();
+      this.form.controls.branch.disable();
+      this.form.controls.province.disable();
+      this.form.controls.region.disable();
+      this.form.controls.apiKey.disable();
+      this.form.controls.courses.disable();
+     }
+
+   }
 }

@@ -1,3 +1,4 @@
+import { EncryptionService } from './../../../../core/services/encryption.service';
 import { AuthService } from './../../../../core/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import anime from 'animejs/lib/anime.es.js';
@@ -18,6 +19,7 @@ export class LoginFormComponent implements OnInit {
               private fb: FormBuilder,
               private authService: AuthService,
               private ngxService: NgxUiLoaderService,
+              private encryptionService: EncryptionService,
               private toastr: ToastrService) { }
 
   ngOnInit() {
@@ -94,6 +96,7 @@ export class LoginFormComponent implements OnInit {
         localStorage.setItem('userk', 'jx4D84uVVNyhITBwUM0ITWNFLp3yPMSMqmJjNhjNX4lTGWpamYzrgRM3XBjjTTzt');
         localStorage.setItem('idus', data.idus);
         localStorage.setItem('name', data.name);
+        localStorage.setItem('role', this.encryptionService.convertText('encrypt', data.role));
         this.router.navigate(['/home/users/list']);
         this.ngxService.stop();
       },

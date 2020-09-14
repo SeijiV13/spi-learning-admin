@@ -1,3 +1,4 @@
+import { EncryptionService } from './../../../../core/services/encryption.service';
 
 import { Component, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -11,17 +12,24 @@ export class HomeContainerComponent implements OnInit {
   opened = true;
   showMenu = false;
   activeRoute = 'user';
+  role = '';
 
-  constructor(private router: Router, private cd: ChangeDetectorRef) { }
+  constructor(private router: Router, private cd: ChangeDetectorRef,
+              private encryptionService: EncryptionService) { }
 
   ngOnInit() {
     this.checkRoute();
+    this.getDecryptedRole();
+  }
+
+  getDecryptedRole() {
+    this.role = this.encryptionService.convertText('decrypt', localStorage.getItem('role'));
   }
 
   checkRoute() {
-    if(this.router.url.includes('courses')) {
+    if (this.router.url.includes('courses')) {
       this.activeRoute = 'course';
-    } else if(this.router.url.includes('users')) {
+    } else if (this.router.url.includes('users')) {
       this.activeRoute = 'user';
     } else {
       this.activeRoute = 'video';

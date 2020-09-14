@@ -16,8 +16,9 @@
             <input formControlName="username" type="" class="form-control" id="" aria-describedby="name">
 
             <label for="role">Role</label>
-            <select formControlName="role" type="" class="form-control" id="" aria-describedby="name">
-              <option value="VIEWER">VIEWER</option>
+            <select (change)="changeInputBehavior($event)" formControlName="role" type="" class="form-control" id="" aria-describedby="name">
+              <option value="VIEWER">Viewer</option>
+              <option value="USERMANAGER">User Manager</option>
             </select>
 
 

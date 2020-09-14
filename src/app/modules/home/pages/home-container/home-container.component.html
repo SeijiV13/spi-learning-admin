@@ -10,9 +10,9 @@
         <br><br>
         <ul>
           <li [ngClass]="activeRoute === 'user' ? 'selected' : ''" (click)="redirect('users')"><i-bs name="people-fill"></i-bs> Manage Users</li>
-          <li [ngClass]="activeRoute === 'course' ? 'selected' : ''" (click)="redirect('courses')"><i-bs name="folder-fill"></i-bs> Manage Courses</li>
-          <li [ngClass]="activeRoute === 'video' ? 'selected' : ''" (click)="redirect('videos')"><i-bs name="film"></i-bs> Manage Videos</li>
-          <li [ngClass]="activeRoute === 'reports' ? 'selected' : ''" (click)="redirect('reports')"><i-bs name="newspaper"></i-bs> Reports</li>
+          <li *ngIf="role === 'ADMIN'" [ngClass]="activeRoute === 'course' ? 'selected' : ''" (click)="redirect('courses')"><i-bs name="folder-fill"></i-bs> Manage Courses</li>
+          <li *ngIf="role === 'ADMIN'" [ngClass]="activeRoute === 'video' ? 'selected' : ''" (click)="redirect('videos')"><i-bs name="film"></i-bs> Manage Videos</li>
+          <li *ngIf="role === 'ADMIN'" [ngClass]="activeRoute === 'reports' ? 'selected' : ''" (click)="redirect('reports')"><i-bs name="newspaper"></i-bs> Reports</li>
         </ul>
     </ng-sidebar>
 
