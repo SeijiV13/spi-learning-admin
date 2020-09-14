@@ -1,3 +1,4 @@
+import { AdminService } from './../../../../core/services/admin.service';
 import { CourseService } from './../../../../core/services/course.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { UserService } from './../../../../core/services/user.service';
@@ -20,7 +21,8 @@ export class UpdateUserComponent implements OnInit {
               private router: Router,
               private userService: UserService,
               private courseService: CourseService,
-              private loader: NgxUiLoaderService) { }
+              private loader: NgxUiLoaderService,
+              private adminService: AdminService) { }
 
   ngOnInit() {
     this.initializeForm();
@@ -51,12 +53,19 @@ export class UpdateUserComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getUser(localStorage.getItem('idus')).subscribe((data) => {
+    this.changeInputBehavior();
+    if (localStorage.getItem('idrole') === 'user') {
+      this.userService.getUser(localStorage.getItem('idus')).subscribe((data) => {
+        this.form.patchValue(data);
+        for (const course of data.courses) {
+          this.addExistingCourse(course);
+        }
+      });
+    } else {
+      this.adminService.getAdmin(localStorage.getItem('idus')).subscribe((data) => {
       this.form.patchValue(data);
-      for (const course of data.courses) {
-        this.addExistingCourse(course);
-      }
-    });
+      });
+    }
   }
 
   getListCourses() {
@@ -111,11 +120,29 @@ export class UpdateUserComponent implements OnInit {
       for (const course of this.courses.controls) {
         user.courses.push({desc: course.value.course, value: this.trim(course.value.course).toLowerCase()});
       }
-      this.userService.updateUser(user).subscribe((data) => {
+
+
+      if (localStorage.getItem('idrole') !== 'admin') {
+        this.userService.updateUser(user).subscribe((data) => {
+          this.loader.stop();
+          this.toastr.success('Successfully updated user', 'Success!');
+          this.router.navigate(['/home/users/list']);
+      });
+    } else {
+       const adminUser = {
+        id: this.form.controls.id.value,
+        name: user.name,
+        username: user.username,
+        role: user.role,
+
+        status: 'Active',
+       };
+       this.adminService.updateAdmin(adminUser).subscribe((data) => {
         this.loader.stop();
         this.toastr.success('Successfully updated user', 'Success!');
         this.router.navigate(['/home/users/list']);
     });
+    }
 
     }
 
@@ -127,5 +154,27 @@ export class UpdateUserComponent implements OnInit {
 
   back() {
     this.router.navigate(['/home/users/list']);
+  }
+
+  changeInputBehavior() {
+    if (localStorage.getItem('idrole') !== 'admin') {
+     this.form.controls.batchNumber.enable();
+     this.form.controls.branch.enable();
+     this.form.controls.province.enable();
+     this.form.controls.region.enable();
+     this.form.controls.apiKey.enable();
+     this.form.controls.expiration.enable();
+     this.form.controls.role.disable();
+    } else {
+     this.form.controls.batchNumber.disable();
+     this.form.controls.branch.disable();
+     this.form.controls.province.disable();
+     this.form.controls.region.disable();
+     this.form.controls.apiKey.disable();
+     this.form.controls.courses.disable();
+     this.form.controls.expiration.disable();
+     this.form.controls.role.disable();
+    }
+
   }
 }

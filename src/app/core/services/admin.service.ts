@@ -19,4 +19,33 @@ constructor(private http: HttpClient) { }
     );
 
    }
+
+   updateAdmin(User): Observable<any> {
+    return this.http.put(`${environment.url}/admin/update/${User.id}`, User).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+
+   }
+
+   getAdmins(): Observable<any> {
+     return this.http.get(`${environment.url}/admin`).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
+
+   getAdmin(id): Observable<any> {
+    return this.http.get(`${environment.url}/admin/single/${id}`).pipe(
+     map(data => data),
+     catchError(error => throwError(error))
+   );
+  }
+
+   deleteAdmin(id)   {
+    return this.http.delete(`${environment.url}/admin/${id}`).pipe(
+      map(data => data),
+      catchError(error => throwError(error))
+    );
+   }
 }

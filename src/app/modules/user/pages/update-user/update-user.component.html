@@ -1,5 +1,5 @@
 <div class="header">
-    <h3 class="title">Add User</h3>
+    <h3 class="title">Update User</h3>
     <span class="add" (click)="back()"> <i-bs name="backspace-fill" class="backspace-fill" ></i-bs> Back</span>
   </div>
 
@@ -17,7 +17,8 @@
 
             <label for="role">Role</label>
             <select formControlName="role" type="" class="form-control" id="" aria-describedby="name">
-              <option value="VIEWER">VIEWER</option>
+              <option value="VIEWER">Viewer</option>
+              <option value="USERMANAGER">User Manager</option>
             </select>
 
             <label for="batch">Batch Number</label>

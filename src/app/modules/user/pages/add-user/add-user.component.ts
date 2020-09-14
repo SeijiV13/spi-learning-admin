@@ -147,6 +147,7 @@ export class AddUserComponent implements OnInit {
       this.form.controls.province.enable();
       this.form.controls.region.enable();
       this.form.controls.apiKey.enable();
+      this.form.controls.expiration.enable();
      } else {
       this.form.controls.batchNumber.disable();
       this.form.controls.branch.disable();
@@ -154,6 +155,7 @@ export class AddUserComponent implements OnInit {
       this.form.controls.region.disable();
       this.form.controls.apiKey.disable();
       this.form.controls.courses.disable();
+      this.form.controls.expiration.disable();
      }
 
    }

@@ -1,93 +1,163 @@
-<div class="header">
-    <h3 class="title">Users</h3>
-    <span class="add" (click)="addUser()"> <i-bs name="plus-circle-fill" class="plus-circle-fill" ></i-bs> Add User</span>
-  </div>
+<span class="add" (click)="addUser()"> <i-bs name="plus-circle-fill" class="plus-circle-fill" ></i-bs> Add User</span>
+<ngb-tabset [destroyOnHide]="false">
+  <ngb-tab title="Users">
+    <ng-template ngbTabContent>
 
 
-  <div class="card">
-    <div class="card-body">
-        <label>Filter</label>
-        <input class="form-control" (keyup)="filterResults($event)">
-    </div>
-  </div>
+      <div class="card">
+        <div class="card-body">
+            <label>Filter</label>
+            <input class="form-control" (keyup)="filterResults($event)">
+        </div>
+      </div>
 
-  <br>
-  <div class="card">
-    <div class="card-body">
-      <table class="table table-striped table-responsive">
-        <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">User Name</th>
-          <th scope="col">Role</th>
-          <th scope="col">Batch Number</th>
-          <th scope="col">Branch</th>
-          <th scope="col">Region</th>
-          <th scope="col">Province</th>
-          <th scope="col">Api Key</th>
-          <th scope="col">Status</th>
-          <th scope="col">User Created</th>
-          <th scope="col">Date of Expiration</th>
-          <th scope="col">Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let user of filteredUser; let i = index">
-          <th scope="row">{{ i + 1 }}</th>
-          <td>
-            {{user.name}}
-          </td>
-          <td>
-            {{user.username}}
-          </td>
-          <td>
-            {{user.role}}
-            </td>
-           <td>
-             {{user.batchNumber}}
-          </td>
-          <td>
-              {{user.branch}}
-           </td>
-           <td>
-              {{user.region}}
-           </td>
-           <td>
-              {{user.province}}
-           </td>
-          <td>
-            {{user.apiKey}}
-          </td>
-          <td>
-            {{user.status}}
-          </td>
-          <td>
-            {{user.createdAt}}
-          </td>
-          <td>
-            {{user.expiration}}
-            </td>
-          <td>
-            <div>
-              <button (click)="updateUser(user.id)" class="btn btn-info">  <i-bs name="pencil" class="menu-button" ></i-bs> </button>
+      <br>
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-striped table-responsive">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">User Name</th>
+              <th scope="col">Role</th>
+              <th scope="col">Batch Number</th>
+              <th scope="col">Branch</th>
+              <th scope="col">Region</th>
+              <th scope="col">Province</th>
+              <th scope="col">Api Key</th>
+              <th scope="col">Status</th>
+              <th scope="col">User Created</th>
+              <th scope="col">Date of Expiration</th>
+              <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of filteredUser; let i = index">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{user.name}}
+              </td>
+              <td>
+                {{user.username}}
+              </td>
+              <td>
+                {{user.role}}
+                </td>
+               <td>
+                 {{user.batchNumber}}
+              </td>
+              <td>
+                  {{user.branch}}
+               </td>
+               <td>
+                  {{user.region}}
+               </td>
+               <td>
+                  {{user.province}}
+               </td>
+              <td>
+                {{user.apiKey}}
+              </td>
+              <td>
+                {{user.status}}
+              </td>
+              <td>
+                {{user.createdAt}}
+              </td>
+              <td>
+                {{user.expiration}}
+                </td>
+              <td>
+                <div>
+                  <button (click)="updateUser(user.id, 'user')" class="btn btn-info">  <i-bs name="pencil" class="menu-button" ></i-bs> </button>
+                </div>
+                &nbsp; &nbsp;
+                <div>
+                  <button (click)="deleteUser(user.id)" class="btn btn-info">  <i-bs name="trash" class="menu-button" ></i-bs> </button>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+          <!-- <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav> -->
+        </div>
+      </div>
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab *ngIf="role === 'ADMIN'" title="Admin Users">
+    <ng-template></ng-template>
+    <ng-template ngbTabContent>
+
+
+          <div class="card">
+            <div class="card-body">
+                <label>Filter</label>
+                <input class="form-control" (keyup)="filterAdminResults($event)">
             </div>
-            &nbsp; &nbsp;
-            <div>
-              <button (click)="deleteUser(user.id)" class="btn btn-info">  <i-bs name="trash" class="menu-button" ></i-bs> </button>
+          </div>
+
+          <br>
+          <div class="card">
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let user of filteredAdminUser; let i = index">
+                  <th scope="row">{{ i + 1 }}</th>
+                  <td>
+                    {{user.name}}
+                  </td>
+                  <td>
+                    {{user.username}}
+                  </td>
+                  <td>
+                    {{user.role}}
+                  </td>
+                  <td>
+                    {{user.status}}
+                  </td>
+                  <td>
+                    <div>
+                      <button (click)="updateUser(user.id, 'admin')" class="btn btn-info">  <i-bs name="pencil" class="menu-button" ></i-bs> </button>
+                    </div>
+                    &nbsp; &nbsp;
+                    <div>
+                      <button (click)="deleteAdminUser(user.id)" class="btn btn-info">  <i-bs name="trash" class="menu-button" ></i-bs> </button>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+              <!-- <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+              </nav> -->
             </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <!-- <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
-      </nav> -->
-    </div>
-  </div>
+          </div>
+
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
