@@ -63,6 +63,6 @@ import { ShareVideoComponent } from './core/components/modals/share-video/share-
     useClass: ApiKeyInterceptor,
     multi: true}],
   bootstrap: [AppComponent],
-  entryComponents: [SessionExpiredComponent]
+  entryComponents: [SessionExpiredComponent,  ShareVideoComponent]
 })
 export class AppModule { }
