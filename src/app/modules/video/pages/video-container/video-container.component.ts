@@ -138,7 +138,7 @@ export class VideoContainerComponent implements OnInit {
   setLink(id) {
     this.videoService.generateShareKey().subscribe((data: any) => {
       this.modalService.open(ShareVideoComponent);
-      this.link = `https://spi-app.herokuapp.com/share/${id}?id=${data.jwt}`;
+      this.link = `https://spiconnect.online/share/${id}?id=${data.jwt}`;
       this.videoService.linkSubject.next(this.link);
     });
 
