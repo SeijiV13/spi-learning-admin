@@ -35,7 +35,7 @@
            {{user.batchNumber}}
          </td>
          <td>
-           {{user.totalVideos ? user.totalVideos: 0}}
+           {{computeTotalVideo(user.courses)}}
          </td>
          <td>
             <ng-template #popContent>
@@ -51,7 +51,7 @@
             </button>
          </td>
          <td>
-           {{getPercentage(user.totalVideos, user.watched.length) != undefined ? getPercentage(user.totalVideos, user.watched.length) : 'Not yet logged in'}}
+           {{getPercentage(computeTotalVideo(user.courses), user.watched.length) != undefined ? getPercentage(computeTotalVideo(user.courses), user.watched.length) : 'Not yet logged in'}}
         </td>
 
 

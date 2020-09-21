@@ -1,3 +1,4 @@
+import { CourseService } from './../../../../core/services/course.service';
 import { VideoService } from './../../../../core/services/video/video.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,13 +16,16 @@ export class ListUserReportsComponent implements OnInit {
   users: any[];
   filteredUser: any[] ;
   videos: [];
+  courses: [];
   constructor(private router: Router,
               private userService: UserService,
               private videoService: VideoService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private courseService: CourseService) { }
 
   ngOnInit() {
     this.getUsers();
+    this.getCourses();
   }
 
   getUsers() {
@@ -76,6 +80,12 @@ export class ListUserReportsComponent implements OnInit {
     }
   }
 
+  getCourses() {
+    this.courseService.getCourse().subscribe((data) => {
+      this.courses = data;
+    });
+  }
+
   generateReport() {
     const doc = new jsPDF('p', 'pt', 'a4');
     doc.autoTable({ html: '#my-table' });
@@ -87,6 +97,8 @@ export class ListUserReportsComponent implements OnInit {
     });
     doc.output('dataurlnewwindow');
   }
+
+
 
  getUsersForPdf() {
     const users = [];
@@ -111,6 +123,19 @@ export class ListUserReportsComponent implements OnInit {
 
   getPercentage(total, watched) {
     return (( watched / total) * 100 ?  '%' + ( watched / total) * 100 : undefined);
+  }
+
+  computeTotalVideo(courses) {
+    let total = 0;
+    if(this.courses) {
+      for(const course of courses) {
+        const foundCourse: any = this.courses.find((data: any) => data.name === course.desc);
+        if (foundCourse) {
+          total = total + foundCourse.videos.length;
+        }
+      }
+    }
+    return total;
   }
 
 }
