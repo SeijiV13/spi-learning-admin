@@ -68,12 +68,12 @@ export class ListUserReportsComponent implements OnInit {
     const value = event.target.value;
     if (value) {
       this.filteredUser = this.users.filter((data: any) =>
-        data.name.includes(value) ||
-        data.username.includes(value) ||
-        data.batchNumber.includes(value) ||
-        data.region.includes(value) ||
-        data.province.includes(value) ||
-        data.branch.includes(value)
+        data.name.toLowerCase().includes(value.toLowerCase()) ||
+        data.username.toLowerCase().includes(value.toLowerCase()) ||
+        data.batchNumber.toLowerCase().includes(value.toLowerCase()) ||
+        data.region.toLowerCase().includes(value.toLowerCase()) ||
+        data.province.toLowerCase().includes(value.toLowerCase()) ||
+        data.branch.toLowerCase().includes(value.toLowerCase())
       );
     } else {
       this.filteredUser = this.users;
@@ -87,7 +87,7 @@ export class ListUserReportsComponent implements OnInit {
   }
 
   generateReport() {
-    const doc = new jsPDF('p', 'pt', 'a4');
+    const doc = new jsPDF();
     doc.autoTable({ html: '#my-table' });
 
     // Or use javascript directly:
@@ -105,15 +105,19 @@ export class ListUserReportsComponent implements OnInit {
     for (const user of this.filteredUser) {
         users.push([{ content: user.name, styles: { fontStyle: 'bold' } },
         user.batchNumber,
-        user.totalVideos ? user.totalVideos : 0,
+        this.computeTotalVideo(user.courses) ? this.computeTotalVideo(user.courses) : 0,
         user.watched.length,
-        this.getPercentage(user.totalVideos, user.watched.length) !== undefined ?
-        this.getPercentage(user.totalVideos, user.watched.length) : 'Not yet logged in'
+        this.getPercentage(this.computeTotalVideo(user.courses), user.watched.length) !== undefined ?
+        this.getPercentage(this.computeTotalVideo(user.courses), user.watched.length) : 'Not yet logged in'
       ]);
         if (user.watchedTitle) {
-        users.push(   [{ content: 'Watched Videos', colSpan: 5, rowSpan: 1, styles: { halign: 'center', fontStyle: 'bold' } }]);
-        for (const vid of user.watchedTitle) {
-          users.push(   [{ content: vid.title, colSpan: 5, rowSpan: 1, styles: { halign: 'left' } }]);
+        if(user.watchedTitle.length > 0) {
+          users.push(   [{ content: 'Watched Videos', colSpan: 5, rowSpan: 1, styles: { halign: 'center', fontStyle: 'bold' } }]);
+          for (const vid of user.watchedTitle) {
+            if (vid) {
+              users.push(   [{ content: vid.title, colSpan: 5, rowSpan: 1, styles: { halign: 'left' } }]);
+            }
+          }
         }
       }
 
