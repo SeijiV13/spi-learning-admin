@@ -14,6 +14,7 @@ import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShareVideoComponent } from './core/components/modals/share-video/share-video.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 @NgModule({
   declarations: [
     AppComponent, NotFoundComponent, SessionExpiredComponent, ShareVideoComponent
@@ -26,6 +27,7 @@ import { ShareVideoComponent } from './core/components/modals/share-video/share-
     HttpClientModule,
     ToastrModule.forRoot(),
     NgxBootstrapIconsModule.pick(allIcons),
+    PaginationModule.forRoot(),
     NgxUiLoaderModule.forRoot({
       bgsColor: '#46c81e',
       bgsOpacity: 0.5,

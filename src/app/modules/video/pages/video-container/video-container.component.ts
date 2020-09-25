@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./video-container.component.css']
 })
 export class VideoContainerComponent implements OnInit {
+  page = 1;
+  totalItems = 40;
   courseForm: FormGroup;
   description = '';
   videos: any = [];
@@ -41,7 +43,7 @@ export class VideoContainerComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.getVideos();
+    this.getVideos(1);
     this.initCourseForm();
     this.getCourses();
   }
@@ -51,6 +53,11 @@ export class VideoContainerComponent implements OnInit {
       course: [''],
       uc: ['1']
     });
+  }
+
+  pageChange(event) {
+    this.page = event.page;
+    this.getVideos(this.page);
   }
 
 
@@ -127,10 +134,12 @@ export class VideoContainerComponent implements OnInit {
     });
   }
 
-  getVideos() {
-    this.videoService.getVideos().subscribe((data: any) => {
+  getVideos(page) {
+    this.videoService.getVideos(page).subscribe((data: any) => {
       this.videos = data.rows;
+      this.totalItems = data.count;
       this.filteredVideos = data.rows;
+      this.addedVideos = [];
     });
   }
 
@@ -168,7 +177,7 @@ export class VideoContainerComponent implements OnInit {
     const course = this.courseForm.controls.course.value;
     const uc = this.courseForm.controls.uc.value;
     this.courseService.addVideos(this.addedVideos, course, uc).subscribe(data => {
-      this.getVideos();
+      this.getVideos(this.page);
       this.saveCourse = course;
       this.saveUc = uc;
       this.getCoursesOnAction();
@@ -186,7 +195,7 @@ export class VideoContainerComponent implements OnInit {
     const course = this.courseForm.controls.course.value;
     const uc = this.courseForm.controls.uc.value;
     this.courseService.sortVideos(this.selectedVideos, course, uc).subscribe(data => {
-      this.getVideos();
+      this.getVideos(this.page);
       this.saveCourse = course;
       this.saveUc = uc;
       this.getCoursesOnAction();
@@ -210,7 +219,7 @@ export class VideoContainerComponent implements OnInit {
     const course = this.courseForm.controls.course.value;
     const uc = this.courseForm.controls.uc.value;
     this.courseService.deleteVideo(course, id).subscribe(data => {
-      this.getVideos();
+      this.getVideos(this.page);
       this.saveCourse = course;
       this.saveUc = uc;
       this.getCoursesOnAction();

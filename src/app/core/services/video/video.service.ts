@@ -11,7 +11,7 @@ export class VideoService {
   linkSubject = new ReplaySubject<any>();
   constructor(private http: HttpClient) { }
 
-  getVideos(page = 1, limit = 200) {
+  getVideos(page = 1, limit = 10) {
     return this.http.get(`${environment.url}/vdo/admvideos?page=${page}&limit=${limit}`).pipe(
       map(data => data),
       catchError(error => throwError(error))

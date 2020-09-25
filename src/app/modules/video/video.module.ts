@@ -11,10 +11,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { VideoContainerComponent } from './pages/video-container/video-container.component';
 import { VideoRoutes } from './video.routing';
 import { NgxSortableModule } from 'ngx-sortable';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 @NgModule({
   declarations: [VideoContainerComponent],
   imports: [
     NgxSortableModule,
+    PaginationModule,
     CommonModule,
     NgbModule,
     NgxUiLoaderModule,

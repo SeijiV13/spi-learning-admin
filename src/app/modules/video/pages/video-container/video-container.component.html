@@ -77,6 +77,7 @@
         </div>
     <div  class="card">
       <div class="card-body">
+          <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="pageChange($event)"></pagination>
         <table class="table table-striped">
           <thead>
           <tr>
