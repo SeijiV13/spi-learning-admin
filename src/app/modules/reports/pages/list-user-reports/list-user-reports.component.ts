@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { firebrick } from 'color-name';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'app-list-user-reports',
   templateUrl: './list-user-reports.component.html',
@@ -15,7 +16,7 @@ import { firebrick } from 'color-name';
 export class ListUserReportsComponent implements OnInit {
   users: any[];
   filteredUser: any[] ;
-  videos: [];
+  videos = [];
   courses: [];
   constructor(private router: Router,
               private userService: UserService,
@@ -47,8 +48,20 @@ export class ListUserReportsComponent implements OnInit {
 
   getVideos() {
     this.videoService.getVideos().subscribe((data: any) => {
-      this.videos = data.rows;
-      this.getWatched();
+      const pages = Math.ceil(data.count /  10);
+      const calls = [];
+      let i = 1;
+      while (i <= pages) {
+        calls.push(this.videoService.getVideos(i));
+        i++;
+      };
+      forkJoin(calls).subscribe((data2: any) => {
+       for(const res of data2) {
+         this.videos = this.videos.concat(res.rows);
+       }
+       this.getWatched();
+      });
+
     });
   }
 
