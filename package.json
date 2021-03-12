@@ -27,7 +27,7 @@
     "bootstrap": "^4.5.0",
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "jspdf-autotable": "^3.5.6",
     "ng-effects": "^9.1.1",
     "ng-sidebar": "^9.4.2",
